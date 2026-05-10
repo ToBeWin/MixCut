@@ -2,14 +2,14 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { useParams } from 'next/navigation'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { CheckCircle2, FileImage, FileVideo, ListVideo, UploadCloud } from 'lucide-react'
+import { useAssets, useUploadAsset } from '@/hooks/queries'
 import { AppShell } from '@/components/layout/AppShell'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Progress } from '@/components/ui/Progress'
 import { useI18n } from '@/lib/i18n'
-import { listAssets, uploadAsset, type Asset } from '@/lib/api'
+import { type Asset } from '@/lib/api'
 
 interface UploadItem {
   file: File
@@ -22,15 +22,10 @@ interface UploadItem {
 export function UploadPage() {
   const params = useParams()
   const projectId = (params?.id as string) || ''
-  const queryClient = useQueryClient()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { t } = useI18n()
 
-  const { data } = useQuery({
-    queryKey: ['assets', projectId],
-    queryFn: () => listAssets(projectId),
-    enabled: !!projectId,
-  })
+  const { data } = useAssets(projectId)
 
   const [uploads, setUploads] = useState<UploadItem[]>([])
   const [goalForm, setGoalForm] = useState({
@@ -44,12 +39,7 @@ export function UploadPage() {
     bgm_requested: false,
   })
 
-  const uploadMutation = useMutation({
-    mutationFn: ({ projectId, file }: { projectId: string; file: File }) => uploadAsset(projectId, file),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['assets', projectId] })
-    },
-  })
+  const uploadMutation = useUploadAsset(projectId)
 
   const handleFiles = useCallback((files: FileList) => {
     const newItems: UploadItem[] = Array.from(files).map((file) => ({
@@ -59,21 +49,18 @@ export function UploadPage() {
     }))
     setUploads((prev) => [...prev, ...newItems])
     newItems.forEach((item) => {
-      uploadMutation.mutate(
-        { projectId, file: item.file },
-        {
-          onSuccess: (result) => {
-            setUploads((prev) =>
-              prev.map((u) => (u.file === item.file ? { ...u, status: 'done' as const, progress: 100, result } : u))
-            )
-          },
-          onError: (error) => {
-            setUploads((prev) =>
-              prev.map((u) => (u.file === item.file ? { ...u, status: 'error' as const, error: String(error) } : u))
-            )
-          },
-        }
-      )
+      uploadMutation.mutate(item.file, {
+        onSuccess: (result) => {
+          setUploads((prev) =>
+            prev.map((u) => (u.file === item.file ? { ...u, status: 'done' as const, progress: 100, result } : u))
+          )
+        },
+        onError: (error) => {
+          setUploads((prev) =>
+            prev.map((u) => (u.file === item.file ? { ...u, status: 'error' as const, error: String(error) } : u))
+          )
+        },
+      })
     })
   }, [projectId, uploadMutation])
 

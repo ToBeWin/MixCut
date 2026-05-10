@@ -3,11 +3,12 @@ from __future__ import annotations
 import asyncio
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
+from backend.errors import NotFoundError, RateLimitError, ValidationError
 from backend.models.asset import VideoAsset
 from backend.models.job import RenderJob
 from backend.observability.logging import get_logger
@@ -132,10 +133,9 @@ async def create_job(payload: JobCreate, db: AsyncSession = Depends(get_db)) -> 
     )
     active_jobs = running_count.scalars().all()
     if len(active_jobs) >= settings.max_concurrent_jobs_per_user:
-        raise HTTPException(
-            status_code=429,
-            detail=f"Too many active jobs ({len(active_jobs)}/{settings.max_concurrent_jobs_per_user}). "
-                   "Please wait for existing jobs to complete or cancel one.",
+        raise RateLimitError(
+            f"Too many active jobs ({len(active_jobs)}/{settings.max_concurrent_jobs_per_user}). "
+            "Please wait for existing jobs to complete or cancel one."
         )
 
     goal_data = payload.goal.model_dump()
@@ -179,7 +179,7 @@ async def create_job(payload: JobCreate, db: AsyncSession = Depends(get_db)) -> 
 async def get_job(job_id: str, db: AsyncSession = Depends(get_db)) -> JobSchema:
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     goal_data = job.goal if isinstance(job.goal, dict) else {}
     return JobSchema(
         id=job.id,
@@ -198,7 +198,7 @@ async def get_job(job_id: str, db: AsyncSession = Depends(get_db)) -> JobSchema:
 async def pause_job(job_id: str, db: AsyncSession = Depends(get_db)) -> JobSchema:
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     job.status = JobStatus.PENDING_REVIEW.value
     await db.flush()
     await db.refresh(job)
@@ -221,9 +221,9 @@ async def resume_job(job_id: str, db: AsyncSession = Depends(get_db)) -> JobSche
     """Approve and resume a job that is pending review."""
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     if job.status != JobStatus.PENDING_REVIEW.value:
-        raise HTTPException(status_code=400, detail="Job is not pending review")
+        raise ValidationError("Job is not pending review")
 
     # Resume graph in background
     async def _resume():
@@ -279,9 +279,9 @@ async def correct_job(job_id: str, correction_text: str = "", db: AsyncSession =
     """Submit a correction for a job that is pending review."""
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     if job.status != JobStatus.PENDING_REVIEW.value:
-        raise HTTPException(status_code=400, detail="Job is not pending review")
+        raise ValidationError("Job is not pending review")
 
     # Resume graph with correction in background
     async def _correct():
@@ -343,7 +343,7 @@ async def correct_job(job_id: str, correction_text: str = "", db: AsyncSession =
 async def cancel_job(job_id: str, db: AsyncSession = Depends(get_db)) -> JobSchema:
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     job.status = JobStatus.CANCELED.value
     job.current_step = "canceled"
     await db.flush()
@@ -378,10 +378,10 @@ async def get_job_output(job_id: str, db: AsyncSession = Depends(get_db)):
 
     job = await db.get(RenderJob, job_id)
     if job is None:
-        raise HTTPException(status_code=404, detail="Job not found")
+        raise NotFoundError("Job", job_id)
     if not job.output_path:
-        raise HTTPException(status_code=404, detail="Job has no output file")
+        raise NotFoundError("Job output", job_id)
     output_path = Path(job.output_path)
     if not output_path.exists():
-        raise HTTPException(status_code=404, detail="Output file not found on disk")
+        raise NotFoundError("Output file", job.output_path)
     return FileResponse(output_path, media_type="video/mp4", filename=f"mixcut_{job_id[:8]}.mp4")

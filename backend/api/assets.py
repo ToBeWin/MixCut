@@ -4,12 +4,13 @@ import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, UploadFile
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
 from backend.deps import SettingsDep, StorageBackendDep
+from backend.errors import AssetError, FFmpegError, NotFoundError
 from backend.models.asset import VideoAsset
 from backend.observability.logging import get_logger
 from backend.observability.tracing import span
@@ -18,6 +19,7 @@ from backend.schemas.asset import AssetList, AssetStatus
 from backend.tools.ffmpeg.commands import FFmpegCommand, poster_thumbnail
 from backend.tools.ffmpeg.probe import probe_video
 from backend.tools.ffmpeg.runner import run_ffmpeg
+from backend.sanitize import sanitize_filename
 
 logger = get_logger(__name__)
 
@@ -51,10 +53,11 @@ async def upload_asset(
     storage: StorageBackendDep = ...,
 ) -> AssetSchema:
     if file.content_type not in ALLOWED_CONTENT_TYPES:
-        raise HTTPException(status_code=400, detail=f"Unsupported content type: {file.content_type}")
+        raise AssetError(f"Unsupported content type: {file.content_type}")
     is_image = bool(file.content_type and file.content_type.startswith("image/"))
     asset_id = str(uuid.uuid4())
-    ext = Path(file.filename or ("image.jpg" if is_image else "video.mp4")).suffix
+    raw_filename = sanitize_filename(file.filename or ("image.jpg" if is_image else "video.mp4"))
+    ext = Path(raw_filename).suffix
     storage_key = f"assets/{project_id}/{asset_id}{ext}"
     content = await file.read()
     await storage.write(storage_key, content, content_type=file.content_type or ("image/jpeg" if is_image else "video/mp4"))
@@ -103,7 +106,7 @@ async def upload_asset(
     asset = VideoAsset(
         id=asset_id,
         project_id=project_id,
-        filename=file.filename or f"{asset_id}{ext}",
+        filename=raw_filename,
         storage_path=storage_key,
         content_type=file.content_type or "video/mp4",
         status=AssetStatus.UPLOADED.value,
@@ -127,7 +130,7 @@ async def upload_asset(
 async def delete_asset(asset_id: str, db: AsyncSession = Depends(get_db)) -> None:
     asset = await db.get(VideoAsset, asset_id)
     if asset is None:
-        raise HTTPException(status_code=404, detail="Asset not found")
+        raise NotFoundError("Asset", asset_id)
     await db.delete(asset)
 
 
@@ -138,7 +141,7 @@ async def get_asset_poster(asset_id: str, db: AsyncSession = Depends(get_db), se
 
     asset = await db.get(VideoAsset, asset_id)
     if asset is None:
-        raise HTTPException(status_code=404, detail="Asset not found")
+        raise NotFoundError("Asset", asset_id)
 
     # Try to read from storage
     if asset.poster_path:
@@ -149,7 +152,7 @@ async def get_asset_poster(asset_id: str, db: AsyncSession = Depends(get_db), se
     # Fallback: extract frame at t=0
     storage_path = Path(settings.storage_root) / asset.storage_path
     if not storage_path.exists():
-        raise HTTPException(status_code=404, detail="Asset file not found")
+        raise NotFoundError("Asset file", asset.storage_path)
 
     import tempfile
     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
@@ -160,8 +163,8 @@ async def get_asset_poster(asset_id: str, db: AsyncSession = Depends(get_db), se
         await run_ffmpeg(cmd, timeout=30)
         data = Path(tmp_path).read_bytes()
         return Response(data, media_type="image/jpeg")
-    except Exception:
-        raise HTTPException(status_code=500, detail="Failed to extract frame")
+    except Exception as exc:
+        raise FFmpegError("Failed to extract frame") from exc
     finally:
         Path(tmp_path).unlink(missing_ok=True)
 
@@ -174,11 +177,11 @@ async def get_asset_frame(asset_id: str, time: float = 0.0, db: AsyncSession = D
 
     asset = await db.get(VideoAsset, asset_id)
     if asset is None:
-        raise HTTPException(status_code=404, detail="Asset not found")
+        raise NotFoundError("Asset", asset_id)
 
     storage_path = Path(settings.storage_root) / asset.storage_path
     if not storage_path.exists():
-        raise HTTPException(status_code=404, detail="Asset file not found")
+        raise NotFoundError("Asset file", asset.storage_path)
 
     # Check cache
     cache_key = hashlib.md5(f"{asset_id}:{time:.1f}".encode()).hexdigest()
@@ -199,7 +202,7 @@ async def get_asset_frame(asset_id: str, time: float = 0.0, db: AsyncSession = D
         data = Path(tmp_path).read_bytes()
         cache_path.write_bytes(data)
         return Response(data, media_type="image/jpeg")
-    except Exception:
-        raise HTTPException(status_code=500, detail="Failed to extract frame")
+    except Exception as exc:
+        raise FFmpegError("Failed to extract frame") from exc
     finally:
         Path(tmp_path).unlink(missing_ok=True)

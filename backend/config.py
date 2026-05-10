@@ -35,6 +35,7 @@ class Settings(BaseSettings):
         default_factory=lambda: ["http://localhost:3000"],
         validation_alias=AliasChoices("CORS_ORIGINS", "MIXCUT_CORS_ORIGINS"),
     )
+    api_key: str | None = Field(default=None, validation_alias=AliasChoices("API_KEY", "MIXCUT_API_KEY"))
 
     storage_root: Path = Field(default=Path("storage"), validation_alias=AliasChoices("STORAGE_PATH", "MIXCUT_STORAGE_ROOT"))
     output_root: Path = Field(default=Path("storage/outputs"), validation_alias=AliasChoices("OUTPUT_PATH", "MIXCUT_OUTPUT_ROOT"))

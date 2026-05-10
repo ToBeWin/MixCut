@@ -3,13 +3,13 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowDownAZ, ArrowDownUp, Clock, Filter, Plus, MoreVertical } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
+import { useProjects } from '@/hooks/queries'
 import { AppShell } from '@/components/layout/AppShell'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { NewProjectModal } from '@/components/dashboard/NewProjectModal'
 import { useI18n } from '@/lib/i18n'
-import { listProjects, type Project } from '@/lib/api'
+import { type Project } from '@/lib/api'
 
 type SortKey = 'updated' | 'name'
 type FilterStatus = 'all' | 'active' | 'completed'
@@ -26,10 +26,7 @@ export function DashboardPage() {
   const [sortBy, setSortBy] = useState<SortKey>('updated')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const { locale, t } = useI18n()
-  const { data, isLoading } = useQuery({
-    queryKey: ['projects'],
-    queryFn: listProjects,
-  })
+  const { data, isLoading } = useProjects()
 
   const projects = (data?.projects ?? [])
     .filter((p) => {

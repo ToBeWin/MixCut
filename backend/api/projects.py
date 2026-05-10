@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db
 from backend.models.project import Project
+from backend.sanitize import sanitize_filename, sanitize_user_text
 from backend.schemas.project import Project as ProjectSchema
 from backend.schemas.project import ProjectCreate, ProjectList
 
@@ -31,7 +32,9 @@ async def list_projects(db: AsyncSession = Depends(get_db)) -> ProjectList:
 
 @router.post("", response_model=ProjectSchema, status_code=201)
 async def create_project(payload: ProjectCreate, db: AsyncSession = Depends(get_db)) -> ProjectSchema:
-    project = Project(name=payload.name, description=payload.description)
+    name = sanitize_filename(payload.name, max_len=100)
+    desc = sanitize_user_text(payload.description, max_len=1000) if payload.description else None
+    project = Project(name=name, description=desc)
     db.add(project)
     await db.flush()
     await db.refresh(project)
@@ -51,8 +54,8 @@ async def update_project(project_id: str, payload: ProjectCreate, db: AsyncSessi
     project = await db.get(Project, project_id)
     if project is None:
         raise HTTPException(status_code=404, detail="Project not found")
-    project.name = payload.name
-    project.description = payload.description
+    project.name = sanitize_filename(payload.name, max_len=100)
+    project.description = sanitize_user_text(payload.description, max_len=1000) if payload.description else None
     await db.flush()
     await db.refresh(project)
     return _project_to_schema(project)

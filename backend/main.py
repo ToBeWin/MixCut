@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.api.auth import AuthMiddleware
 from backend.api.error_handler import ErrorHandlerMiddleware
 from backend.api.rate_limit import RateLimitMiddleware
 from backend.api.router import api_router
@@ -34,6 +35,7 @@ def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(title=settings.app_name, debug=settings.debug, lifespan=lifespan)
     app.add_middleware(ErrorHandlerMiddleware)
+    app.add_middleware(AuthMiddleware)
     app.add_middleware(
         RateLimitMiddleware,
         default_limit=settings.api_rate_limit_default,

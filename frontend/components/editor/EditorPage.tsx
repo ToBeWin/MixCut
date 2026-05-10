@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AlertTriangle, CheckCircle2, RotateCcw, Sparkles, Settings, XCircle } from 'lucide-react'
+import { useProject, useJob, useCreateJob, useCancelJob } from '@/hooks/queries'
 import { AppShell } from '@/components/layout/AppShell'
 import { AssetBrowser } from '@/components/editor/AssetBrowser'
 import { VideoPlayer } from '@/components/editor/VideoPlayer'
@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import { useToast } from '@/components/ui/Toast'
 import { useJobProgress } from '@/lib/sse'
-import { createJob, getJob, getProject, getJobOutputUrl, cancelJob, type Asset, type EditSegment, type UserGoal } from '@/lib/api'
+import { getJobOutputUrl, type Asset, type EditSegment, type UserGoal } from '@/lib/api'
 
 const DEFAULT_GOAL: UserGoal = {
   prompt: '',
@@ -33,7 +33,6 @@ const DEFAULT_GOAL: UserGoal = {
 export function EditorPage() {
   const params = useParams()
   const projectId = (params?.id as string) || ''
-  const queryClient = useQueryClient()
   const { addToast } = useToast()
   const [jobId, setJobId] = useState<string | null>(null)
   const [segments, setSegments] = useState<EditSegment[]>([])
@@ -45,22 +44,8 @@ export function EditorPage() {
   const [goalDraft, setGoalDraft] = useState<UserGoal>(DEFAULT_GOAL)
   const [selectedSegment, setSelectedSegment] = useState<EditSegment | null>(null)
 
-  const { data: project } = useQuery({
-    queryKey: ['project', projectId],
-    queryFn: () => getProject(projectId),
-    enabled: !!projectId,
-  })
-
-  const { data: job } = useQuery({
-    queryKey: ['job', jobId],
-    queryFn: () => getJob(jobId!),
-    enabled: !!jobId,
-    refetchInterval: (query) => {
-      const status = query.state.data?.status
-      if (status === 'succeeded' || status === 'failed' || status === 'canceled') return false
-      return 3000
-    },
-  })
+  const { data: project } = useProject(projectId)
+  const { data: job } = useJob(jobId)
 
   const { events, connected, progress, currentNode } = useJobProgress(jobId)
 
@@ -125,30 +110,8 @@ export function EditorPage() {
     [videoElement],
   )
 
-  const startJobMutation = useMutation({
-    mutationFn: (goal: UserGoal) => createJob(projectId, goal),
-    onSuccess: (job) => {
-      setJobId(job.id)
-      queryClient.invalidateQueries({ queryKey: ['project', projectId] })
-      setShowGoalForm(false)
-      addToast('Job created, processing started', 'success')
-    },
-    onError: (error: any) => {
-      const detail = error?.body ? (() => {
-        try { return JSON.parse(error.body).detail } catch { return null }
-      })() : null
-      addToast(detail || `Failed to create job (${error.status || 'network'})`, 'error')
-    },
-  })
-
-  const cancelMutation = useMutation({
-    mutationFn: () => cancelJob(jobId!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job', jobId] })
-      addToast('Job canceled', 'info')
-    },
-    onError: () => addToast('Failed to cancel job', 'error'),
-  })
+  const startJobMutation = useCreateJob(projectId)
+  const cancelMutation = useCancelJob()
 
   const handleStartEdit = useCallback(() => {
     setShowGoalForm(true)
@@ -156,8 +119,20 @@ export function EditorPage() {
 
   const handleSubmitGoal = useCallback(() => {
     if (!goalDraft.prompt.trim()) return
-    startJobMutation.mutate(goalDraft)
-  }, [goalDraft, startJobMutation])
+    startJobMutation.mutate(goalDraft, {
+      onSuccess: (job) => {
+        setJobId(job.id)
+        setShowGoalForm(false)
+        addToast('Job created, processing started', 'success')
+      },
+      onError: (error: any) => {
+        const detail = error?.body ? (() => {
+          try { return JSON.parse(error.body).detail } catch { return null }
+        })() : null
+        addToast(detail || `Failed to create job (${error.status || 'network'})`, 'error')
+      },
+    })
+  }, [goalDraft, startJobMutation, addToast])
 
   const isRunning = job?.status === 'running' || job?.status === 'queued'
   const isPendingReview = job?.status === 'pending_review'
@@ -191,7 +166,14 @@ export function EditorPage() {
                 {isRunning && (
                   <Button
                     variant="ghost"
-                    onClick={() => cancelMutation.mutate()}
+                    onClick={() => {
+                      if (jobId) {
+                        cancelMutation.mutate(jobId, {
+                          onSuccess: () => addToast('Job canceled', 'info'),
+                          onError: () => addToast('Failed to cancel job', 'error'),
+                        })
+                      }
+                    }}
                     disabled={cancelMutation.isPending}
                     className="text-[11px] text-red-400 hover:text-red-300"
                   >

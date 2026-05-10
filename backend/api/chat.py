@@ -13,6 +13,7 @@ from backend.models.job import RenderJob
 from backend.observability.logging import get_logger
 from backend.schemas.agent_state import AgentState
 from backend.schemas.correction import CorrectionIntent, CorrectionRequest, CorrectionScope
+from backend.sanitize import sanitize_user_text
 from backend.workers.progress import ProgressEvent, publish_event
 
 logger = get_logger(__name__)
@@ -48,6 +49,7 @@ async def _parse_correction_intent(project_id: str, job_id: str, raw_text: str, 
 
 @router.post("/corrections", response_model=CorrectionIntent, status_code=201)
 async def submit_correction(payload: CorrectionRequest, db: AsyncSession = Depends(get_db)) -> CorrectionIntent:
+    payload.message = sanitize_user_text(payload.message)
     job = await db.get(RenderJob, payload.job_id)
     if job is None:
         raise HTTPException(status_code=404, detail="Job not found")
