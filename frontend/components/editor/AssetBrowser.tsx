@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Check, FileImage, FileVideo, Search, Upload } from 'lucide-react'
 import { listAssets, uploadAsset, type Asset } from '@/lib/api'
 import { Button } from '@/components/ui/Button'
+import { AssetGridSkeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/Toast'
 import { useI18n } from '@/lib/i18n'
 
@@ -76,7 +77,7 @@ export function AssetBrowser({ projectId, onSelectAsset }: AssetBrowserProps) {
         </Button>
       </header>
       <div className="flex-1 overflow-auto p-2">
-        {isLoading && <p className="py-4 text-center text-[12px] text-[var(--muted)]">Loading...</p>}
+        {isLoading && <AssetGridSkeleton />}
         {uploadMutation.isPending && (
           <div className="mb-2 rounded-[4px] border border-[var(--cyan)]/30 bg-[var(--surface-low)] p-2">
             <p className="truncate text-[11px]">{uploadMutation.variables?.name}</p>

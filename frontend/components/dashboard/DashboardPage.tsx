@@ -7,6 +7,7 @@ import { useProjects } from '@/hooks/queries'
 import { AppShell } from '@/components/layout/AppShell'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { DashboardSkeleton } from '@/components/ui/Skeleton'
 import { NewProjectModal } from '@/components/dashboard/NewProjectModal'
 import { useI18n } from '@/lib/i18n'
 import { type Project } from '@/lib/api'
@@ -79,9 +80,7 @@ export function DashboardPage() {
         </header>
         <section className="flex-1 overflow-auto p-6">
           {isLoading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="shimmer h-8 w-32 rounded-[4px]" />
-            </div>
+            <DashboardSkeleton />
           ) : projects.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20">
               <div className="flex size-16 items-center justify-center rounded-[8px] border border-[var(--border)] bg-[var(--surface)]">

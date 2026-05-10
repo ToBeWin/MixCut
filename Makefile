@@ -1,7 +1,7 @@
 SHELL := /bin/sh
 COMPOSE := docker compose
 
-.PHONY: help infra-up infra-down infra-logs infra-check compose-config backend-dev worker-dev frontend-dev
+.PHONY: help infra-up infra-down infra-logs infra-check compose-config backend-dev worker-dev frontend-dev lint test docker-build ci
 
 help:
 	@printf "%s\n" "MixCut developer commands"
@@ -13,6 +13,10 @@ help:
 	@printf "%s\n" "  make backend-dev     Run FastAPI when backend/ exists"
 	@printf "%s\n" "  make worker-dev      Run Celery worker when backend/ exists"
 	@printf "%s\n" "  make frontend-dev    Run Next.js when frontend/ exists"
+	@printf "%s\n" "  make lint            Run all linters (ruff + tsc)"
+	@printf "%s\n" "  make test            Run all tests (backend + frontend)"
+	@printf "%s\n" "  make docker-build    Build all Docker images"
+	@printf "%s\n" "  make ci              Run full CI locally (lint + test)"
 
 infra-up:
 	$(COMPOSE) up -d postgres redis minio minio-init jaeger prometheus grafana
@@ -41,3 +45,27 @@ worker-dev:
 frontend-dev:
 	@test -d frontend || (printf "%s\n" "frontend/ is not present yet." >&2; exit 1)
 	cd frontend && npm run dev
+
+lint:
+	@printf "%s\n" "=== Backend lint (ruff) ==="
+	cd backend && ruff check .
+	@printf "%s\n" "=== Frontend typecheck (tsc) ==="
+	cd frontend && npm run typecheck
+	@printf "%s\n" "=== All linting passed ==="
+
+test:
+	@printf "%s\n" "=== Backend tests ==="
+	cd backend && python -m pytest tests/ services/ -v --tb=short
+	@printf "%s\n" "=== Frontend tests ==="
+	cd frontend && npm test -- --watchAll=false
+	@printf "%s\n" "=== All tests passed ==="
+
+docker-build:
+	@printf "%s\n" "=== Building backend image ==="
+	docker build -t mixcut-api:latest backend/
+	@printf "%s\n" "=== Building frontend image ==="
+	docker build -t mixcut-frontend:latest frontend/
+	@printf "%s\n" "=== All images built ==="
+
+ci: lint test
+	@printf "%s\n" "=== CI passed ==="
