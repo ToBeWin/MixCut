@@ -102,6 +102,8 @@ services:
       - "3001:3000"
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./docs/infra/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docs/infra/grafana-dashboard.json:/var/lib/grafana/dashboards/mixcut.json:ro
     depends_on:
       - prometheus
     restart: unless-stopped

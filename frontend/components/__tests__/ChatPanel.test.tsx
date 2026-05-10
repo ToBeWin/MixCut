@@ -74,7 +74,9 @@ describe('ChatPanel', () => {
 
   it('disables send when no job', () => {
     renderWithQuery(<ChatPanel projectId="p1" jobId={null} />)
-    const sendButton = screen.getByRole('button', { name: 'Send' })
+    // Find the primary button (Send) - it should be disabled when no job
+    const buttons = screen.getAllByRole('button')
+    const sendButton = buttons.find(b => b.className.includes('accent') && !b.textContent)
     expect(sendButton).toBeDisabled()
   })
 

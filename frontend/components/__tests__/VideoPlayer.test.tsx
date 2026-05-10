@@ -10,7 +10,7 @@ describe('VideoPlayer', () => {
 
   it('renders placeholder when no src', () => {
     render(<VideoPlayer />)
-    expect(screen.getByText(/no video/i)).toBeInTheDocument()
+    expect(screen.getByText(/Upload clips and start a job to preview/i)).toBeInTheDocument()
   })
 
   it('applies custom className', () => {
@@ -30,13 +30,14 @@ describe('VideoPlayer', () => {
     expect(wrapper).toBeTruthy()
   })
 
-  it('renders play button', () => {
+  it('renders play controls', () => {
     render(<VideoPlayer src="test.mp4" />)
-    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument()
+    const playButtons = screen.getAllByRole('button', { name: /play/i })
+    expect(playButtons.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('renders volume button', () => {
+  it('renders mute button', () => {
     render(<VideoPlayer src="test.mp4" />)
-    expect(screen.getByRole('button', { name: /volume/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /mute/i })).toBeInTheDocument()
   })
 })
