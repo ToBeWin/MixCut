@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MixCut - Upload &amp; Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#f5f5f5",
+                        "primary-container": "#00f0ff",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "on-tertiary-container": "#5d5f5f",
+                        "outline-variant": "#3b494b",
+                        "surface-container-highest": "#353534",
+                        "surface-variant": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#393939",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary": "#00363a",
+                        "outline": "#849495",
+                        "secondary": "#ffdb9d",
+                        "on-secondary-container": "#6b4b00",
+                        "primary": "#dbfcff",
+                        "primary-fixed": "#7df4ff",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface": "#e5e2e1",
+                        "inverse-primary": "#006970",
+                        "on-secondary": "#412d00",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#feb700",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#00dbe9",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-container": "#006970",
+                        "on-secondary-fixed": "#271900",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "secondary-fixed-dim": "#ffba20",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "tertiary-container": "#d9d9d9",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#5e4200",
+                        "secondary-fixed": "#ffdea8",
+                        "surface-tint": "#00dbe9",
+                        "on-tertiary": "#2f3131",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-surface-variant": "#b9cacb",
+                        "on-error": "#690005",
+                        "background": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "1px",
+                        "margin-md": "16px",
+                        "container-gap": "16px",
+                        "margin-lg": "24px",
+                        "unit": "4px",
+                        "panel-padding": "12px",
+                        "margin-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "mono-code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["16px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "display-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "mono-code": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for panels */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b494b;
+        }
+        
+        /* Toggle Switch CSS */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00f0ff;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00f0ff;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+        
+        /* Inner glow for active selections */
+        .inner-glow {
+            box-shadow: inset 0 0 0 1px rgba(0, 240, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex font-body-md selection:bg-primary-container selection:text-on-primary-fixed">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-12 h-full w-16 md:w-20 bg-surface-container-low border-r border-outline-variant flex flex-col items-center py-margin-md gap-container-gap z-40 transition-all duration-200 ease-in-out">
+<!-- Tabs -->
+<div class="flex flex-col gap-margin-sm w-full px-unit">
+<!-- Active Tab: Projects -->
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-primary-container bg-surface-container-highest rounded-lg group">
+<span class="material-symbols-outlined text-[24px]">folder</span>
+<span class="font-label-caps text-label-caps">Projects</span>
+</button>
+<!-- Inactive Tabs -->
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">movie_filter</span>
+<span class="font-label-caps text-label-caps">Assets</span>
+</button>
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">psychology</span>
+<span class="font-label-caps text-label-caps">AI Agents</span>
+</button>
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">history</span>
+<span class="font-label-caps text-label-caps">History</span>
+</button>
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">cloud</span>
+<span class="font-label-caps text-label-caps">Cloud</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col gap-margin-sm w-full px-unit pb-12">
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">help</span>
+</button>
+<button class="w-full aspect-square flex flex-col items-center justify-center gap-unit text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high rounded-lg transition-colors group">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<div class="flex-1 flex flex-col ml-16 md:ml-20 h-full">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface-container border-b border-outline-variant flex justify-between items-center px-panel-padding h-12 z-50">
+<div class="flex items-center gap-margin-lg">
+<div class="font-display-lg text-display-lg font-bold text-primary-container pr-margin-lg border-r border-outline-variant h-8 flex items-center">
+                    MixCut
+                </div>
+<nav class="flex gap-margin-md h-full items-center">
+<button class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors px-margin-sm py-unit rounded cursor-pointer active:opacity-80">File</button>
+<button class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors px-margin-sm py-unit rounded cursor-pointer active:opacity-80">Edit</button>
+<!-- Active Navigation Item -->
+<button class="text-primary-container font-bold border-b-2 border-primary-container h-12 px-margin-sm flex items-center cursor-pointer active:opacity-80">Sequence</button>
+<button class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors px-margin-sm py-unit rounded cursor-pointer active:opacity-80">View</button>
+<button class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors px-margin-sm py-unit rounded cursor-pointer active:opacity-80">Help</button>
+</nav>
+</div>
+<div class="flex items-center gap-margin-md pl-margin-md">
+<div class="flex gap-unit border-r border-outline-variant pr-margin-md">
+<button class="p-unit rounded hover:bg-surface-variant text-on-surface-variant transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<button class="p-unit rounded hover:bg-surface-variant text-on-surface-variant transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-unit rounded hover:bg-surface-variant text-on-surface-variant transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<button class="font-title-sm text-title-sm bg-surface-container-high border border-outline-variant px-margin-md py-unit rounded hover:bg-surface-variant transition-colors cursor-pointer text-on-surface">
+                    Export
+                </button>
+</div>
+</header>
+<!-- Fixed-Panel Grid Canvas -->
+<main class="flex-1 mt-12 flex bg-outline-variant gap-gutter overflow-hidden">
+<!-- Left Panel: Upload & Queue -->
+<section class="flex-[3] flex flex-col bg-surface p-margin-lg overflow-y-auto">
+<div class="flex items-center justify-between mb-margin-lg">
+<h1 class="font-headline-md text-headline-md text-on-surface">Media Ingest</h1>
+<span class="font-label-caps text-label-caps px-margin-sm py-unit bg-surface-container-highest rounded text-on-surface-variant border border-outline-variant">WORKSPACE ACTIVE</span>
+</div>
+<!-- Drag & Drop Zone -->
+<div class="w-full h-48 border border-dashed border-outline-variant rounded-lg bg-surface-container-lowest flex flex-col items-center justify-center gap-margin-sm cursor-pointer hover:bg-surface-container-highest transition-colors relative group mb-margin-lg">
+<div class="absolute inset-0 bg-primary-container opacity-0 group-hover:opacity-5 transition-opacity rounded-lg pointer-events-none"></div>
+<span class="material-symbols-outlined text-[48px] text-on-surface-variant group-hover:text-primary-container transition-colors" style="font-variation-settings: 'FILL' 0;">upload_file</span>
+<p class="font-title-sm text-title-sm text-on-surface">Drag and drop raw clips here</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Supports MP4, MOV up to 4K resolution.</p>
+</div>
+<!-- Upload Queue -->
+<div class="flex flex-col gap-margin-sm flex-1">
+<div class="flex items-center justify-between mb-unit">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-[18px]">queue_play_next</span>
+                            Processing Queue
+                        </h2>
+<span class="font-label-caps text-label-caps text-primary-container">5 ITEMS</span>
+</div>
+<!-- Queue Item 1 (Processing) -->
+<div class="flex items-center gap-margin-md p-margin-sm bg-surface-container rounded border border-outline-variant relative overflow-hidden inner-glow">
+<!-- AI processing pulse effect on top border -->
+<div class="absolute top-0 left-0 h-[1px] w-full bg-primary-container opacity-50 shadow-[0_0_10px_rgba(0,240,255,1)]"></div>
+<div class="w-24 h-14 bg-surface-container-lowest rounded overflow-hidden flex-shrink-0 relative">
+<img alt="Thumbnail" class="w-full h-full object-cover opacity-70 mix-blend-luminosity" data-alt="A cinematic close-up shot of a modern electric car speeding down a neon-lit city street at night. The lighting is high-contrast, featuring deep, obsidian shadows and vibrant streaks of electric cyan and magenta motion blur. The mood is energetic, futuristic, and high-performance. The aesthetic aligns with a premium tech commercial in a dark-mode studio environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO8P0ucZlcezYfzxocwW4TSstbRgGhdhE0rWof9SZh2EZXhS8fj6eV9kpa_K5z5u2vC8BCeMZO0sHRaVb3jDYgS5Hrg8wc-SCQVnJARmG4K1i5ytTDvcG7C2f2q2URtyaZjbGg3_BNIPRVk_PPJl6KZA0tEo_fPmhuSI-1lRCYRODQig6gAoNIN5Z9BVsDAIy29N_SLuDw6Xyb0gRMwsbuDsPGPWQT8RMgqe9SfzPsipxU6HWW6ZFKqJyu4HDaQNDdaCjEoZHoq0k"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-unit">
+<span class="font-mono-code text-[9px] text-primary-container">00:00:15:00</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-unit">
+<div class="flex justify-between items-start">
+<span class="font-body-md text-body-md text-on-surface truncate pr-margin-sm">A_Roll_Product_Intro_Cam1.mp4</span>
+<span class="font-label-caps text-label-caps text-primary-container flex items-center gap-[2px]">
+<span class="material-symbols-outlined text-[12px] animate-spin">sync</span>
+                                    Analyzing...
+                                </span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[65%] rounded-full shadow-[0_0_5px_rgba(0,240,255,0.5)]"></div>
+</div>
+<div class="flex justify-between items-center mt-unit">
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-[4px]">
+<span class="material-symbols-outlined text-[14px]">movie_filter</span>
+                                    Scene Detection
+                                </span>
+<span class="font-mono-code text-mono-code text-on-surface-variant">12 Shots Found</span>
+</div>
+</div>
+</div>
+<!-- Queue Item 2 (Processing) -->
+<div class="flex items-center gap-margin-md p-margin-sm bg-surface-container rounded border border-outline-variant relative overflow-hidden">
+<div class="w-24 h-14 bg-surface-container-lowest rounded overflow-hidden flex-shrink-0 relative">
+<img alt="Thumbnail" class="w-full h-full object-cover opacity-70 mix-blend-luminosity" data-alt="A macro shot of intricate mechanical watch gears meshing together. The metallic surfaces are highly polished, reflecting stark, directional white studio light against an absolute black background. The mood is precise, technical, and hyper-focused. The visual style embodies luxury engineering and raw hardware perfection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTFn1KEUlhnpYmVOlLRsh90MJ7cRB01qP8KOKxNrLtzV_3bB0u_xpAipUc4aqmiTIbIEyp3wGYIZ2xt5x2Ep0GSmvsCdpTecOJEwfT6ovmcSjSGkci0xjh1d57HW4_VbdHx2kdueq1yF0mbIsuEVd93dbhV0mAmryxKF6LGd_51YcqdM8RMkSBhT0YJXXlNB2T883vroXr6FAGMZXh0sKGr0jrxnyJC1eKbyeMJeaXdpTFdGo_m_4tmU9u8dLOuNIBHevmx7OI-v4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-unit">
+<span class="font-mono-code text-[9px] text-tertiary-fixed-dim">00:00:08:12</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-unit">
+<div class="flex justify-between items-start">
+<span class="font-body-md text-body-md text-on-surface truncate pr-margin-sm">B_Roll_Macro_Details.mov</span>
+<span class="font-label-caps text-label-caps text-primary-container flex items-center gap-[2px]">
+<span class="material-symbols-outlined text-[12px] animate-spin">sync</span>
+                                    Analyzing...
+                                </span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[40%] rounded-full shadow-[0_0_5px_rgba(0,240,255,0.5)]"></div>
+</div>
+<div class="flex justify-between items-center mt-unit">
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-[4px]">
+<span class="material-symbols-outlined text-[14px]">graphic_eq</span>
+                                    Audio Transcription
+                                </span>
+<span class="font-mono-code text-mono-code text-on-surface-variant">Processing</span>
+</div>
+</div>
+</div>
+<!-- Queue Item 3 (Queued) -->
+<div class="flex items-center gap-margin-md p-margin-sm bg-surface-container-lowest rounded border border-outline-variant relative overflow-hidden opacity-70">
+<div class="w-24 h-14 bg-surface-container-high rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant">movie</span>
+</div>
+<div class="flex-1 flex flex-col gap-unit">
+<div class="flex justify-between items-start">
+<span class="font-body-md text-body-md text-on-surface truncate pr-margin-sm">Lifestyle_Cutaway_01.mp4</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">QUEUED</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden"></div>
+</div>
+</div>
+<!-- Queue Items 4 & 5 (Queued) - Abstracted for space -->
+<div class="flex items-center gap-margin-md p-margin-sm bg-surface-container-lowest rounded border border-outline-variant relative overflow-hidden opacity-70">
+<div class="w-24 h-14 bg-surface-container-high rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant">movie</span>
+</div>
+<div class="flex-1 flex flex-col gap-unit">
+<div class="flex justify-between items-start">
+<span class="font-body-md text-body-md text-on-surface truncate pr-margin-sm">Lifestyle_Cutaway_02.mp4</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">QUEUED</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-margin-md p-margin-sm bg-surface-container-lowest rounded border border-outline-variant relative overflow-hidden opacity-70">
+<div class="w-24 h-14 bg-surface-container-high rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant">movie</span>
+</div>
+<div class="flex-1 flex flex-col gap-unit">
+<div class="flex justify-between items-start">
+<span class="font-body-md text-body-md text-on-surface truncate pr-margin-sm">Drone_Establishing_Shot.mp4</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">QUEUED</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Goal Form -->
+<section class="flex-[2] min-w-[360px] max-w-[480px] bg-surface flex flex-col overflow-y-auto relative border-l border-surface-container-highest">
+<!-- Glassy Header for Form -->
+<div class="sticky top-0 z-10 bg-surface/90 backdrop-blur-md border-b border-outline-variant p-margin-lg pb-margin-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-unit">Sequence Configuration</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Define output parameters to guide AI auto-editing.</p>
+</div>
+<div class="p-margin-lg flex flex-col gap-margin-lg pb-32">
+<!-- Format Section -->
+<div class="flex flex-col gap-margin-md bg-surface-container p-margin-md rounded border border-outline-variant">
+<h3 class="font-title-sm text-title-sm text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-[18px]">aspect_ratio</span>
+                            Format Targets
+                        </h3>
+<div class="grid grid-cols-2 gap-margin-sm">
+<div class="flex flex-col gap-unit">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Platform</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none appearance-none cursor-pointer">
+<option>Douyin / TikTok</option>
+<option>Instagram Reels</option>
+<option>YouTube Shorts</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-unit">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Aspect Ratio</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none appearance-none cursor-pointer">
+<option>9:16 (Vertical)</option>
+<option>16:9 (Landscape)</option>
+<option>1:1 (Square)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-margin-sm">
+<div class="flex flex-col gap-unit">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Target Duration</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none appearance-none cursor-pointer">
+<option>15 Seconds</option>
+<option>30 Seconds</option>
+<option>60 Seconds</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-unit">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Editing Style</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none appearance-none cursor-pointer">
+<option>Energetic &amp; Fast</option>
+<option>Minimalist</option>
+<option>Cinematic Flow</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Details Section -->
+<div class="flex flex-col gap-margin-md bg-surface-container p-margin-md rounded border border-outline-variant">
+<h3 class="font-title-sm text-title-sm text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-[18px]">subject</span>
+                            Content Context
+                        </h3>
+<div class="flex flex-col gap-unit">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Product / Brand Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none placeholder:text-on-surface-variant/50" placeholder="e.g. Lumina Pro Series" type="text"/>
+</div>
+<div class="flex flex-col gap-unit">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Key Selling Points</label>
+<span class="font-mono-code text-[10px] text-on-surface-variant">AI PROMPT</span>
+</div>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md text-on-surface p-margin-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none placeholder:text-on-surface-variant/50 resize-none font-mono-code text-mono-code" placeholder="Enter key features or messaging points to emphasize..." rows="3"></textarea>
+</div>
+</div>
+<!-- Audio & Graphics Section -->
+<div class="flex flex-col gap-margin-sm bg-surface-container p-margin-md rounded border border-outline-variant">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-unit">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">subtitles</span>
+<span class="font-body-md text-body-md text-on-surface">Auto-Generate Subtitles</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-surface border-2 border-outline-variant appearance-none cursor-pointer transition-all duration-300 z-10 top-[2px] left-[2px]" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-lowest cursor-pointer border border-outline-variant" for="toggle1"></label>
+</div>
+</div>
+<div class="w-full h-[1px] bg-outline-variant my-unit"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-unit">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">mic</span>
+<span class="font-body-md text-body-md text-on-surface">AI Voiceover Track</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-surface border-2 border-outline-variant appearance-none cursor-pointer transition-all duration-300 z-10 top-[2px] left-[2px]" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-lowest cursor-pointer border border-outline-variant" for="toggle2"></label>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer CTA -->
+<div class="absolute bottom-0 left-0 w-full bg-surface/90 backdrop-blur-xl border-t border-outline-variant p-margin-lg">
+<button class="w-full py-margin-md bg-primary-container text-on-primary-fixed font-title-sm text-title-sm rounded-lg flex items-center justify-center gap-margin-sm shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all cursor-pointer group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+                        Start Auto-Mix
+                    </button>
+<p class="text-center font-label-caps text-label-caps text-on-surface-variant mt-margin-sm opacity-70">Requires 12 Credits</p>
+</div>
+</section>
+</main>
+</div>
+</body></html>

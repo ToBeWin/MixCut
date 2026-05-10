@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MixCut - Project Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#f5f5f5",
+                        "primary-container": "#00f0ff",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#002022",
+                        "on-tertiary-container": "#5d5f5f",
+                        "outline-variant": "#3b494b",
+                        "surface-container-highest": "#353534",
+                        "surface-variant": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#393939",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary": "#00363a",
+                        "outline": "#849495",
+                        "secondary": "#ffdb9d",
+                        "on-secondary-container": "#6b4b00",
+                        "primary": "#dbfcff",
+                        "primary-fixed": "#7df4ff",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface": "#e5e2e1",
+                        "inverse-primary": "#006970",
+                        "on-secondary": "#412d00",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#feb700",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#00dbe9",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary-container": "#006970",
+                        "on-secondary-fixed": "#271900",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "secondary-fixed-dim": "#ffba20",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "tertiary-container": "#d9d9d9",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#5e4200",
+                        "secondary-fixed": "#ffdea8",
+                        "surface-tint": "#00dbe9",
+                        "on-tertiary": "#2f3131",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-surface-variant": "#b9cacb",
+                        "on-error": "#690005",
+                        "background": "#131313"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "gutter": "1px",
+                        "margin-md": "16px",
+                        "container-gap": "16px",
+                        "margin-lg": "24px",
+                        "unit": "4px",
+                        "panel-padding": "12px",
+                        "margin-sm": "8px"
+                    },
+                    fontFamily: {
+                        "title-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "mono-code": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "title-sm": ["16px", { lineHeight: "1.4", fontWeight: "600" }],
+                        "display-lg": ["32px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "body-sm": ["12px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "label-caps": ["10px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "mono-code": ["12px", { lineHeight: "1.4", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-hidden flex flex-col selection:bg-primary-container selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-surface-container dark:bg-surface-container text-primary-container dark:text-primary-container font-body-md text-body-md fixed top-0 w-full border-b border-outline-variant flex justify-between items-center px-panel-padding h-12 z-50">
+<div class="flex items-center gap-margin-md">
+<span class="font-display-lg text-display-lg font-bold text-primary-container tracking-tight">MixCut</span>
+<nav class="hidden md:flex gap-margin-sm items-center h-full">
+<a class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 px-2 py-1 rounded" href="#">File</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 px-2 py-1 rounded" href="#">Edit</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 px-2 py-1 rounded" href="#">Sequence</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 px-2 py-1 rounded" href="#">View</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 px-2 py-1 rounded" href="#">Help</a>
+</nav>
+</div>
+<div class="flex items-center gap-margin-md h-full">
+<!-- Search Bar on Left of Actions -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">search</span>
+<input class="bg-surface-container-highest border border-outline-variant rounded text-on-surface pl-8 pr-3 py-1 text-body-sm focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none w-48 placeholder:text-on-surface-variant transition-colors" placeholder="Search projects..." type="text"/>
+</div>
+<div class="flex items-center gap-unit">
+<button class="hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 p-1.5 rounded flex items-center justify-center text-on-surface-variant hover:text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button class="hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 p-1.5 rounded flex items-center justify-center text-on-surface-variant hover:text-primary-container">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="hover:bg-surface-variant transition-colors cursor-pointer active:opacity-80 p-1.5 rounded flex items-center justify-center text-on-surface-variant hover:text-primary-container">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+<button class="bg-primary-container text-on-primary-fixed hover:opacity-90 transition-opacity font-title-sm text-title-sm px-4 py-1.5 rounded ml-2">Export</button>
+</div>
+</header>
+<div class="flex h-screen pt-12">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-container-low text-primary-container dark:text-primary-container font-label-caps text-label-caps fixed left-0 top-12 h-full w-16 md:w-20 border-r border-outline-variant flex flex-col items-center py-margin-md gap-container-gap z-40 transition-all duration-200 ease-in-out">
+<div class="flex flex-col items-center mb-4 w-full px-2 gap-2 cursor-pointer hover:bg-surface-container-high transition-colors p-2 rounded">
+<div class="w-8 h-8 bg-surface-variant rounded-full flex items-center justify-center border border-outline-variant overflow-hidden">
+<span class="material-symbols-outlined text-on-surface text-[18px]">account_balance</span>
+</div>
+<div class="hidden md:flex flex-col items-center text-center">
+<span class="text-[8px] text-on-surface font-bold truncate w-full max-w-[60px]">Project Alpha</span>
+<span class="text-[7px] text-on-surface-variant truncate w-full max-w-[60px]">V2.4 Editing</span>
+</div>
+</div>
+<!-- Active Tab: Projects -->
+<a class="text-primary-container bg-surface-container-highest rounded-lg flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 gap-1 group" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">folder</span>
+<span class="hidden md:block">Projects</span>
+</a>
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">movie_filter</span>
+<span class="hidden md:block">Assets</span>
+</a>
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">psychology</span>
+<span class="hidden md:block">AI Agents</span>
+</a>
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">history</span>
+<span class="hidden md:block">History</span>
+</a>
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">cloud</span>
+<span class="hidden md:block">Cloud</span>
+</a>
+<div class="mt-auto flex flex-col gap-2 w-full px-2">
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center py-2 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="hidden md:block">Support</span>
+</a>
+<a class="text-on-tertiary-container opacity-70 hover:text-primary-container hover:bg-surface-container-high flex flex-col items-center justify-center py-2 rounded-lg gap-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+<span class="hidden md:block">Account</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<main class="flex-1 ml-16 md:ml-20 flex bg-[#121212] overflow-hidden gap-gutter p-gutter">
+<!-- Center Canvas: Project Grid -->
+<div class="flex-1 bg-[#1E1E1E] flex flex-col overflow-hidden relative border border-[#2A2A2A]">
+<!-- Workspace Header -->
+<div class="flex justify-between items-center px-margin-lg py-margin-md border-b border-[#2A2A2A] bg-[#1E1E1E]/90 backdrop-blur-md sticky top-0 z-10">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Recent Projects</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage and organize your rendering queue and active edits.</p>
+</div>
+<button class="bg-transparent border border-primary-container text-primary-container hover:bg-primary-container/10 transition-colors font-title-sm text-title-sm px-4 py-2 rounded flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Create New Project
+                    </button>
+</div>
+<!-- Projects Grid -->
+<div class="flex-1 overflow-y-auto p-margin-lg">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-container-gap">
+<!-- Project Card 1 -->
+<div class="bg-[#121212] border border-[#2A2A2A] rounded-lg overflow-hidden group hover:border-primary-container/50 transition-colors cursor-pointer relative">
+<!-- Inner glow on hover -->
+<div class="absolute inset-0 bg-primary-container/0 group-hover:bg-primary-container/5 pointer-events-none transition-colors z-10"></div>
+<div class="aspect-video bg-[#0e0e0e] relative overflow-hidden">
+<img alt="Summer Collection Ad Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="A cinematic still frame of a vibrant summer fashion advertisement. The scene features high-contrast lighting with warm, golden-hour tones illuminating models in bright summer wear against a deep azure sky. The aesthetic is highly saturated and energetic, matching a fast-paced social media edit style. The image has a professional color grade applied, emphasizing teal and orange hues, characteristic of modern video post-production." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmtkzi3aYawsZBDKHo1yXaZ4HxilkTTAN9Q_l_D5knnNmvjzhSAEaLBOsp5XnP6yQ6lShqU2ZUyjULf54cdgjDw6DbiS3W40UbKjwtLfi2zRiFhrrpDRYVqdvqGVElfkp8-B47L66c3xYMFAoxSOp9UieDiRtNy0BL4N_DrbK_0yHHF0NMjKLWTQFoyrqvlvXXPQZfZY50FssebMgfKa1_CmWl8AjpMOL2yhj7BEgX5fVJ1YeD_iPCb-tdvZ1ih6znYwa7g-Q-HxI"/>
+<!-- Platform Badge -->
+<div class="absolute top-2 right-2 bg-surface-container-highest/80 backdrop-blur-sm border border-outline-variant px-2 py-1 rounded flex items-center gap-1 z-20">
+<span class="font-label-caps text-label-caps text-on-surface">TikTok</span>
+</div>
+<!-- Duration Badge -->
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-1.5 py-0.5 rounded flex items-center z-20">
+<span class="font-mono-code text-mono-code text-on-surface">0:30</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-sm text-title-sm text-on-surface truncate pr-2">Summer Collection Ad</h3>
+<button class="text-on-surface-variant hover:text-primary-container opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Editing</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">2h ago</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-[#121212] border border-[#2A2A2A] rounded-lg overflow-hidden group hover:border-primary-container/50 transition-colors cursor-pointer relative border-t-2 border-t-primary-container">
+<div class="absolute inset-0 bg-primary-container/0 group-hover:bg-primary-container/5 pointer-events-none transition-colors z-10"></div>
+<div class="aspect-video bg-[#0e0e0e] relative overflow-hidden">
+<img alt="Tech Product Launch Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="A sleek, modern product launch video frame featuring an abstract gradient background blending deep indigo and cyan hues. Floating geometric metallic shapes reflect dramatic studio lighting, creating a high-end, futuristic tech aesthetic. The composition is clean and minimalist, suitable for a professional corporate tech presentation or an AI-generated asset library preview." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5r3OsROupZIC6pncvTwdlCzTT9HxbTEdTQjgPJgTgZYgRp1gBLTE5BnGu3BIL2TJDnj7uwR9KC7Pyh_dZs1oFOe3gHWjRak6W5MAMyOXgO4nVVXi4Em-YPEQvxUCUevh9zhMRVPw3tq5EWpzJWO72-ytQt_DIuesD62NU3xpTZf3viJxq9Y3jQ3GH6yF2gw379JI284KfNnauUsouc7-f7GWtnClrwDJBGgp4L7agMN1_W9QnW6jtJhEKSVwylJhL5uifUbymdfc"/>
+<div class="absolute top-2 left-2 bg-primary-container/20 text-primary-container backdrop-blur-sm border border-primary-container/50 px-2 py-1 rounded flex items-center gap-1 z-20">
+<span class="material-symbols-outlined text-[12px]">psychology</span>
+<span class="font-label-caps text-label-caps">AI Processed</span>
+</div>
+<div class="absolute top-2 right-2 bg-surface-container-highest/80 backdrop-blur-sm border border-outline-variant px-2 py-1 rounded flex items-center gap-1 z-20">
+<span class="font-label-caps text-label-caps text-on-surface">YouTube</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-1.5 py-0.5 rounded flex items-center z-20">
+<span class="font-mono-code text-mono-code text-on-surface">2:15</span>
+</div>
+</div>
+<div class="p-3">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-sm text-title-sm text-on-surface truncate pr-2">Tech Product Launch</h3>
+<button class="text-on-surface-variant hover:text-primary-container opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-surface-variant border border-outline"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Draft</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Yesterday</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Jobs Queue -->
+<aside class="w-72 bg-[#1E1E1E] border border-[#2A2A2A] flex flex-col hidden lg:flex">
+<div class="p-margin-md border-b border-[#2A2A2A] bg-[#121212]">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">queue</span>
+                        Recent Jobs
+                    </h2>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<!-- Active Render -->
+<div class="bg-[#121212] border border-[#2A2A2A] rounded p-3 mb-2 relative overflow-hidden">
+<!-- Progress bar background -->
+<div class="absolute bottom-0 left-0 h-1 bg-surface-variant w-full">
+<div class="h-full bg-primary-container w-[75%]"></div>
+</div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[16px] animate-pulse">movie</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate w-32">Vlog_Ep04_Final.mp4</span>
+</div>
+<span class="font-mono-code text-mono-code text-primary-container text-[10px]">75%</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">H.264 • 4K</span>
+<span class="font-body-sm text-body-sm text-outline text-[10px]">Est. 4m left</span>
+</div>
+</div>
+<!-- Completed Job -->
+<div class="bg-[#121212] border border-[#2A2A2A] rounded p-3 mb-2 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline-variant text-[16px]">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface truncate w-32">Promo_Short_v2.mov</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline-variant">Done</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ProRes 422</span>
+<span class="font-body-sm text-body-sm text-outline text-[10px]">Today, 10:42 AM</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

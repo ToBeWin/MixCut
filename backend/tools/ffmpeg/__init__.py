@@ -1,0 +1,2 @@
+"""Typed FFmpeg command stubs."""
+

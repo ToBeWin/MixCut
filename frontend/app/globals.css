@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans), "DM Sans", system-ui, sans-serif;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(107, 92, 255, 0.35);
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.studio-grid-bg {
+  background:
+    linear-gradient(rgba(107, 92, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107, 92, 255, 0.03) 1px, transparent 1px),
+    var(--surface-low);
+  background-size: 36px 36px;
+}
+
+.mono {
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.panel-low {
+  background: var(--surface-low);
+  border: 1px solid var(--border);
+}
+
+.panel-raised {
+  background: var(--surface-container);
+  border: 1px solid var(--border);
+}
+
+.glass {
+  background: rgba(20, 20, 24, 0.85);
+  backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.label-caps {
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.studio-focus {
+  outline: 1px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* Refined focus ring for interactive elements */
+.focus-ring:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Subtle inner glow for elevated surfaces */
+.surface-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* Accent glow for important elements */
+.accent-glow {
+  box-shadow:
+    0 0 0 1px rgba(107, 92, 255, 0.2),
+    0 0 12px rgba(107, 92, 255, 0.15);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Loading shimmer effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-low) 25%,
+    var(--surface-container) 50%,
+    var(--surface-low) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}

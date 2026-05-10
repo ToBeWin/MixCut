@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build output
+.next/
+out/
+dist/
+build/
+coverage/
+
+# Runtime data
+storage/
+assets/
+keyframes/
+proxies/
+temp/
+outputs/
+tts/
+logs/
+
+# Local tooling
+.DS_Store
+*.log
+*.pid
+
+# IDE
+.idea/
+.vscode/
+.claude/

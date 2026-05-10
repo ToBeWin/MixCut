@@ -1,0 +1,71 @@
+services:
+  api:
+    image: ${APP_IMAGE:-mixcut-api:latest}
+    environment:
+      APP_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://mixcut:mixcut@postgres:5432/mixcut}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://jaeger:4317}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    expose:
+      - "8000"
+    profiles:
+      - app
+    restart: unless-stopped
+
+  worker:
+    image: ${WORKER_IMAGE:-mixcut-worker:latest}
+    environment:
+      APP_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://mixcut:mixcut@postgres:5432/mixcut}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://jaeger:4317}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    profiles:
+      - app
+    restart: unless-stopped
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-mixcut-frontend:latest}
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL:-/api}
+    expose:
+      - "3000"
+    profiles:
+      - app
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+      - frontend
+    profiles:
+      - app
+    restart: unless-stopped
+
+  redis:
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1000"]
+
+  prometheus:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MixCut - Model Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#f5f5f5",
+                      "primary-container": "#00f0ff",
+                      "on-background": "#e5e2e1",
+                      "on-primary-fixed": "#002022",
+                      "on-tertiary-container": "#5d5f5f",
+                      "outline-variant": "#3b494b",
+                      "surface-container-highest": "#353534",
+                      "surface-variant": "#353534",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container-high": "#2a2a2a",
+                      "error-container": "#93000a",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#393939",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary": "#00363a",
+                      "outline": "#849495",
+                      "secondary": "#ffdb9d",
+                      "on-secondary-container": "#6b4b00",
+                      "primary": "#dbfcff",
+                      "primary-fixed": "#7df4ff",
+                      "inverse-surface": "#e5e2e1",
+                      "on-surface": "#e5e2e1",
+                      "inverse-primary": "#006970",
+                      "on-secondary": "#412d00",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "secondary-container": "#feb700",
+                      "inverse-on-surface": "#313030",
+                      "primary-fixed-dim": "#00dbe9",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-primary-container": "#006970",
+                      "on-secondary-fixed": "#271900",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "secondary-fixed-dim": "#ffba20",
+                      "surface": "#131313",
+                      "surface-container": "#201f1f",
+                      "tertiary-container": "#d9d9d9",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed-variant": "#5e4200",
+                      "secondary-fixed": "#ffdea8",
+                      "surface-tint": "#00dbe9",
+                      "on-tertiary": "#2f3131",
+                      "on-primary-fixed-variant": "#004f54",
+                      "on-surface-variant": "#b9cacb",
+                      "on-error": "#690005",
+                      "background": "#131313"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "1px",
+                      "margin-md": "16px",
+                      "container-gap": "16px",
+                      "margin-lg": "24px",
+                      "unit": "4px",
+                      "panel-padding": "12px",
+                      "margin-sm": "8px"
+              },
+              "fontFamily": {
+                      "title-sm": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "mono-code": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "title-sm": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "10px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-code": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313; /* Fallback */
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b494b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen overflow-hidden flex flex-col font-body-md selection:bg-primary-container selection:text-background">
+<!-- TopAppBar Shared Component -->
+<header class="bg-surface-container flex justify-between items-center px-panel-padding h-12 w-full z-50 fixed top-0 border-b border-outline-variant">
+<!-- Left Section: Logo & Nav -->
+<div class="flex items-center gap-margin-lg">
+<div class="font-display-lg text-display-lg font-bold text-primary-container tracking-tight">
+                MixCut
+            </div>
+<nav class="hidden md:flex items-center gap-margin-md ml-margin-md">
+<!-- Inactive navigation items since we are in a contextual settings overlay -->
+<a class="text-on-surface-variant font-medium text-body-md hover:bg-surface-variant transition-colors px-2 py-1 rounded cursor-pointer" href="#">File</a>
+<a class="text-on-surface-variant font-medium text-body-md hover:bg-surface-variant transition-colors px-2 py-1 rounded cursor-pointer" href="#">Edit</a>
+<a class="text-on-surface-variant font-medium text-body-md hover:bg-surface-variant transition-colors px-2 py-1 rounded cursor-pointer" href="#">Sequence</a>
+<a class="text-on-surface-variant font-medium text-body-md hover:bg-surface-variant transition-colors px-2 py-1 rounded cursor-pointer" href="#">View</a>
+<a class="text-on-surface-variant font-medium text-body-md hover:bg-surface-variant transition-colors px-2 py-1 rounded cursor-pointer" href="#">Help</a>
+</nav>
+</div>
+<!-- Right Section: Actions -->
+<div class="flex items-center gap-margin-md">
+<!-- Global Action -->
+<button class="bg-primary-container text-on-primary-fixed font-title-sm text-title-sm px-margin-md py-1 rounded hover:bg-primary transition-colors flex items-center gap-2 cursor-pointer active:opacity-80">
+                Export
+            </button>
+<!-- Icon Actions -->
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary-container transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+<!-- Settings Icon is Active implicitly by context -->
+<button class="w-8 h-8 flex items-center justify-center rounded text-primary-container bg-surface-variant transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary-container transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 mt-12 overflow-y-auto p-margin-lg flex justify-center">
+<!-- Settings Content Wrapper -->
+<div class="w-full max-w-6xl flex flex-col gap-margin-lg">
+<!-- Header Section -->
+<div class="flex items-end justify-between border-b border-outline-variant pb-margin-sm">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Configuration</div>
+<h1 class="font-headline-md text-headline-md text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container text-[28px]">tune</span>
+                        Model Routing &amp; AI Inference
+                    </h1>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant hover:text-primary-container cursor-pointer transition-colors font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                    Close Settings
+                </div>
+</div>
+<!-- Bento Grid Layout for Settings -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter bg-surface-container-high border border-outline-variant rounded p-gutter">
+<!-- Section 1: Model Fleet Status (Spans full width top) -->
+<section class="lg:col-span-12 bg-surface-container flex flex-col gap-margin-md p-margin-md">
+<div class="flex justify-between items-center">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">router</span>
+                            Active Model Fleet
+                        </h2>
+<span class="font-mono-code text-mono-code text-on-surface-variant bg-surface px-2 py-1 rounded border border-outline-variant">Ping Interval: 5s</span>
+</div>
+<!-- Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-margin-md">
+<!-- DashScope Card -->
+<div class="bg-surface border border-outline-variant rounded p-margin-md flex flex-col gap-margin-md relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary-container opacity-100"></div>
+<div class="flex justify-between items-start">
+<div class="font-title-sm text-title-sm text-on-surface">DashScope</div>
+<div class="flex items-center gap-1 font-mono-code text-mono-code text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> OK
+                                </div>
+</div>
+<div class="flex justify-between items-end mt-auto pt-margin-sm border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Latency</span>
+<span class="font-mono-code text-mono-code text-on-surface">45 ms</span>
+</div>
+</div>
+<!-- Claude 3.5 Sonnet Card -->
+<div class="bg-surface border border-outline-variant rounded p-margin-md flex flex-col gap-margin-md relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary-container opacity-100"></div>
+<div class="flex justify-between items-start">
+<div class="font-title-sm text-title-sm text-on-surface">Claude 3.5 Sonnet</div>
+<div class="flex items-center gap-1 font-mono-code text-mono-code text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> OK
+                                </div>
+</div>
+<div class="flex justify-between items-end mt-auto pt-margin-sm border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Latency</span>
+<span class="font-mono-code text-mono-code text-on-surface">120 ms</span>
+</div>
+</div>
+<!-- GPT-4o Card -->
+<div class="bg-surface border border-outline-variant rounded p-margin-md flex flex-col gap-margin-md relative overflow-hidden group hover:border-primary-container transition-colors">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary-container opacity-100"></div>
+<div class="flex justify-between items-start">
+<div class="font-title-sm text-title-sm text-on-surface">GPT-4o</div>
+<div class="flex items-center gap-1 font-mono-code text-mono-code text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> OK
+                                </div>
+</div>
+<div class="flex justify-between items-end mt-auto pt-margin-sm border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Latency</span>
+<span class="font-mono-code text-mono-code text-on-surface">185 ms</span>
+</div>
+</div>
+<!-- Gemini 1.5 Card (Warning State) -->
+<div class="bg-surface border border-outline-variant rounded p-margin-md flex flex-col gap-margin-md relative overflow-hidden group hover:border-secondary-container transition-colors">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-secondary-container opacity-100"></div>
+<div class="flex justify-between items-start">
+<div class="font-title-sm text-title-sm text-on-surface">Gemini 1.5</div>
+<div class="flex items-center gap-1 font-mono-code text-mono-code text-secondary-container bg-secondary-container/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">warning</span> High Load
+                                </div>
+</div>
+<div class="flex justify-between items-end mt-auto pt-margin-sm border-t border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Latency</span>
+<span class="font-mono-code text-mono-code text-secondary-container">1240 ms</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Task Routing (Left Column, spans 8) -->
+<section class="lg:col-span-8 bg-surface-container flex flex-col p-margin-md">
+<div class="mb-margin-md flex justify-between items-center">
+<div>
+<h2 class="font-title-sm text-title-sm text-on-surface">Task Routing Strategy</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Assign specialized models to specific internal editor tasks.</p>
+</div>
+<button class="bg-surface text-on-surface border border-outline-variant font-body-sm text-body-sm px-3 py-1.5 rounded hover:bg-surface-bright transition-colors">
+                            Reset Defaults
+                        </button>
+</div>
+<!-- Custom Table structure -->
+<div class="flex flex-col border border-outline-variant rounded bg-surface">
+<!-- Header Row -->
+<div class="flex items-center px-margin-md py-margin-sm border-b border-outline-variant bg-surface-container-low font-label-caps text-label-caps text-on-surface-variant">
+<div class="flex-[2]">Task Pipeline</div>
+<div class="flex-[1.5]">Primary Model</div>
+<div class="flex-[1.5]">Fallback Model</div>
+</div>
+<!-- Row 1 -->
+<div class="flex items-center px-margin-md py-margin-sm border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<div class="flex-[2] flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Video Understanding</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Frame analysis &amp; semantic tagging</span>
+</div>
+<div class="flex-[1.5] pr-margin-md">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary-container">visibility</span>
+<span class="font-mono-code text-mono-code text-on-surface flex-1 truncate">GPT-4o</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex-[1.5]">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer hover:border-outline transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">visibility</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant flex-1 truncate">Claude 3.5 Sonnet</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center px-margin-md py-margin-sm border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<div class="flex-[2] flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Edit Planning</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Timeline generation &amp; pacing</span>
+</div>
+<div class="flex-[1.5] pr-margin-md">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary-container">psychology</span>
+<span class="font-mono-code text-mono-code text-on-surface flex-1 truncate">Claude 3.5 Sonnet</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex-[1.5]">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer hover:border-outline transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">psychology</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant flex-1 truncate">GPT-4o</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center px-margin-md py-margin-sm hover:bg-surface-container-low transition-colors group">
+<div class="flex-[2] flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface font-medium">Correction Intent</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Natural language command parsing</span>
+</div>
+<div class="flex-[1.5] pr-margin-md">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer group-hover:border-primary-container transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary-container">chat</span>
+<span class="font-mono-code text-mono-code text-on-surface flex-1 truncate">DashScope</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="flex-[1.5]">
+<div class="flex items-center gap-2 bg-surface-container border border-outline-variant p-2 rounded cursor-pointer hover:border-outline transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">chat</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant flex-1 truncate">Claude 3.5 Sonnet</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: API & Security (Right Column, spans 4) -->
+<section class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Circuit Breaker Panel -->
+<div class="bg-surface-container flex flex-col p-margin-md h-full">
+<h2 class="font-title-sm text-title-sm text-on-surface mb-margin-sm">Circuit Breaker</h2>
+<div class="bg-surface border border-outline-variant rounded p-margin-sm flex items-center gap-margin-sm mb-margin-md">
+<div class="w-3 h-3 rounded-full bg-primary-container shadow-[0_0_8px_#00f0ff]"></div>
+<span class="font-mono-code text-mono-code text-on-surface">System Normal</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-margin-md">
+                            Automatically reroutes traffic if primary model latency exceeds 2000ms for 3 consecutive calls.
+                        </p>
+<div class="mt-auto pt-margin-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface">Auto-Failover</span>
+<!-- Toggle switch mockup -->
+<div class="w-10 h-5 bg-primary-container rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-0.5 w-4 h-4 bg-on-primary-fixed rounded-full shadow-sm"></div>
+</div>
+</div>
+</div>
+<!-- API Keys Panel -->
+<div class="bg-surface-container flex flex-col p-margin-md h-full">
+<h2 class="font-title-sm text-title-sm text-on-surface mb-margin-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">key</span>
+                            API Credentials
+                        </h2>
+<div class="flex flex-col gap-margin-sm">
+<!-- Key Item -->
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">OpenAI (GPT-4o)</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant mt-0.5">sk-...8f9a</span>
+</div>
+<button class="text-primary-container font-body-sm text-body-sm px-2 py-1 rounded hover:bg-primary-container/10 opacity-0 group-hover:opacity-100 transition-all">
+                                    Edit
+                                </button>
+</div>
+<hr class="border-outline-variant/50"/>
+<!-- Key Item -->
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Anthropic (Claude)</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant mt-0.5">sk-ant-...v2xa</span>
+</div>
+<button class="text-primary-container font-body-sm text-body-sm px-2 py-1 rounded hover:bg-primary-container/10 opacity-0 group-hover:opacity-100 transition-all">
+                                    Edit
+                                </button>
+</div>
+<hr class="border-outline-variant/50"/>
+<!-- Key Item -->
+<div class="flex items-center justify-between group">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Aliyun (DashScope)</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant mt-0.5">sk-...m4pq</span>
+</div>
+<button class="text-primary-container font-body-sm text-body-sm px-2 py-1 rounded hover:bg-primary-container/10 opacity-0 group-hover:opacity-100 transition-all">
+                                    Edit
+                                </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Actions -->
+<div class="flex justify-end gap-margin-md pt-margin-md">
+<button class="bg-surface text-on-surface border border-outline-variant font-title-sm text-title-sm px-margin-lg py-2 rounded hover:bg-surface-bright transition-colors">
+                    Cancel
+                </button>
+<button class="bg-primary-container text-on-primary-fixed font-title-sm text-title-sm px-margin-lg py-2 rounded hover:bg-primary transition-colors">
+                    Save Configuration
+                </button>
+</div>
+</div>
+</main>
+</body></html>
